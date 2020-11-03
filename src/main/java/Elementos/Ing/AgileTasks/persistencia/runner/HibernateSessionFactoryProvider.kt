@@ -20,7 +20,7 @@ class HibernateSessionFactoryProvider private constructor() {
         configuration.configure("hibernate.cfg.xml")
         configuration.setProperty("hibernate.connection.username", user)
         configuration.setProperty("hibernate.connection.password", password)
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://$host:3306/$dataBase?createDatabaseIfNotExist=true?serverTimezone=UTC")
+        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://$host:3306/$dataBase?createDatabaseIfNotExist=true&serverTimezone=UTC")
         this.sessionFactory = configuration.buildSessionFactory()
     }
 
