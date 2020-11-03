@@ -12,20 +12,13 @@ class HibernateSessionFactoryProvider private constructor() {
         val env = System.getenv()
         val user = env.getOrDefault("MYSQL_USERNAME", "root")
         val password = env.getOrDefault("MYSQL_PASSWORD","root")
-        val host = "localhost"
-        val dataBase = env.getOrDefault("MYSQL_DATABASE", "Agiletasks_DB")
-
-        val url = env.getOrDefault("SQL_URL", "jdbc:mysql://$host:3306/$dataBase?createDatabaseIfNotExist=true&serverTimezone=UTC")
-        val dialect = env.getOrDefault("HIBERNATE_DIALECT", "org.hibernate.dialect.MySQL8Dialect")
-        val driver = env.getOrDefault("SQL_DRIVER", "com.mysql.cj.jdbc.Driver")
+//        val host = "localhost"
+//        val dataBase = env.getOrDefault("MYSQL_DATABASE", "agiletasks_db")
 
         val configuration = Configuration()
         configuration.configure("hibernate.cfg.xml")
         configuration.setProperty("hibernate.connection.username", user)
         configuration.setProperty("hibernate.connection.password", password)
-        configuration.setProperty("hibernate.connection.url", url)
-        configuration.setProperty("connection.driver_class", driver)
-        configuration.setProperty("hibernate.dialect", dialect)
         this.sessionFactory = configuration.buildSessionFactory()
     }
 
@@ -52,6 +45,4 @@ class HibernateSessionFactoryProvider private constructor() {
             INSTANCE = null
         }
     }
-
-
 }

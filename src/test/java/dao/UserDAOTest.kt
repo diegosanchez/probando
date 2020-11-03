@@ -1,24 +1,24 @@
 package dao
 
-import Elementos.Ing.AgileTasks.Controllers.Rest.UsuarioValidacion
-import Elementos.Ing.AgileTasks.excepciones.NotFoundException
 import Elementos.Ing.AgileTasks.modelo.Usuario
 import Elementos.Ing.AgileTasks.persistencia.runner.TransactionRunner.runTrx
 import Elementos.Ing.AgileTasks.persistencia.runner.dao.UserDAO
 import org.junit.Assert
-
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import utils.DataServiceImpl
 import javax.persistence.NoResultException
 
 class UserDAOTest {
 
-    val userDAO : UserDAO = UserDAO()
-    val usuario : Usuario = Usuario()
-    val dataService : DataServiceImpl = DataServiceImpl()
+    val userDAO: UserDAO = UserDAO()
+    val usuario: Usuario = Usuario()
+    val dataService: DataServiceImpl = DataServiceImpl()
 
     @BeforeEach
-    fun beforeEach(){
+    fun beforeEach() {
         usuario.userName = "name"
         usuario.password = "1234"
         usuario.email = "email"
@@ -29,7 +29,7 @@ class UserDAOTest {
     }
 
     @Test
-    fun guardarTest(){
+    fun guardarTest() {
         val newUsuario = Usuario()
         newUsuario.userName = "new"
         newUsuario.password = "1234"
@@ -49,7 +49,7 @@ class UserDAOTest {
     }
 
     @Test
-    fun recuperarTest(){
+    fun recuperarTest() {
         val usuarioRecuperado = runTrx {
             userDAO.recuperar(usuario.userName)
         }
@@ -61,12 +61,12 @@ class UserDAOTest {
     }
 
     @Test
-    fun actualizarTest(){
+    fun actualizarTest() {
 
         usuario.email = "cambiado"
         usuario.password = "5555"
 
-        val usuarioRecuperado = runTrx{
+        val usuarioRecuperado = runTrx {
             userDAO.actualizar(usuario)
             userDAO.recuperar(usuario.userName)
         }
@@ -78,12 +78,12 @@ class UserDAOTest {
     }
 
     @Test
-    fun eliminarTest(){
-        runTrx{
+    fun eliminarTest() {
+        runTrx {
             userDAO.eliminar(usuario)
         }
 
-        Assertions.assertThrows(NoResultException::class.java){
+        Assertions.assertThrows(NoResultException::class.java) {
             runTrx {
                 userDAO.getUserByName(usuario.userName)
             }
@@ -91,9 +91,9 @@ class UserDAOTest {
     }
 
     @Test
-    fun recuperarTodosTest(){
+    fun recuperarTodosTest() {
 
-        val usuarios = runTrx{
+        val usuarios = runTrx {
             userDAO.recuperarATodos()
         }
 
@@ -106,8 +106,8 @@ class UserDAOTest {
     }
 
     @Test
-    fun validarUsuarioTest(){
-        Assert.assertNotNull(runTrx { userDAO.validateUser(usuario.userName,usuario.password) })
+    fun validarUsuarioTest() {
+        Assert.assertNotNull(runTrx { userDAO.validateUser(usuario.userName, usuario.password) })
 
         val passwordMock = "mock"
 
@@ -116,12 +116,12 @@ class UserDAOTest {
         })
 
         Assert.assertNull(runTrx {
-            userDAO.validateUser(usuario.userName,"")
+            userDAO.validateUser(usuario.userName, "")
         })
     }
 
     @Test
-    fun recuperarPorNombreTest(){
+    fun recuperarPorNombreTest() {
 
         val user = runTrx {
             userDAO.getUserByName(usuario.userName)
@@ -132,7 +132,7 @@ class UserDAOTest {
         Assert.assertEquals(user.userName, usuario.userName)
         Assert.assertEquals(user.email, usuario.email)
 
-        Assertions.assertThrows(NoResultException::class.java){
+        Assertions.assertThrows(NoResultException::class.java) {
             runTrx {
                 userDAO.getUserByName("-1")
             }
@@ -140,7 +140,7 @@ class UserDAOTest {
     }
 
     @AfterEach
-    fun after(){
+    fun after() {
         dataService.deleteAll()
     }
 }
