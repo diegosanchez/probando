@@ -28,6 +28,6 @@ jobs:
         run: ./gradlew test -i
 
         env:
-          SQL_URL: jdbc:h2:mem:test
-          HIBERNATE_DIALECT: org.hibernate.dialect.H2Dialect
+          SQL_URL: jdbc.h2.mem.test
+          HIBERNATE_DIALECT: orghibernate.dialect.H2Dialect
           SQL_DRIVER: org:h2:Driver
