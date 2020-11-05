@@ -22,14 +22,16 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("mysql:mysql-connector-java")
+	implementation("com.h2database:h2:1.4.200")
 	implementation 'junit:junit:4.12'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 	runtimeOnly("mysql:mysql-connector-java")
 	testImplementation 'io.cucumber:cucumber-java:6.8.1'
 	testImplementation 'io.cucumber:cucumber-junit:6.8.1'
+	testCompile group: 'com.h2database', name: 'h2', version: '1.4.200'
 }
 
 configurations {
